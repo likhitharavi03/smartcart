@@ -3,8 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
-  
+
 }
 
 body {
@@ -12,18 +11,7 @@ body {
   color: #121212;
   min-height: 100vh;
 }
-.content {
-    flex: 1;   /* pushes footer down */
-    padding: 40px;
-}
 
-.footer {
-    background-color: #198754;
-    color: white;
-    text-align: center;
-    padding: 15px;
-    width: 100%;
-}
 /* =============== SIDEBAR =============== */
 /* ===== SIDEBAR (Sticky) ===== */
 .sidebar {
@@ -1059,13 +1047,31 @@ select:focus {
 }
 
 /* ===================================================== FOOTER ===================================================== */
+/* Make full height layout */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Main wrapper */
+.main-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Content area grows automatically */
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Footer stays at bottom */
 .footer {
-  background: #059669;
-  color: #cbd5e1;
-  text-align: center;
-  padding: 20px;
-  font-size: 15px;
-  margin-top: auto;
+    background: #0f8b6d;
+    color: white;
+    text-align: center;
+    padding: 15px;
 }
 
 .success-container {
@@ -1457,6 +1463,7 @@ td {
     width: 100%;
   }
 }
+
 /* Hamburger button */
 .hamburger {
   display: none;
@@ -1489,7 +1496,7 @@ td {
     transition: 0.3s;
   }
 
-  #sidebar-toggle:checked ~ .sidebar {
+  #sidebar-toggle:checked~.sidebar {
     transform: translateX(0);
   }
 
@@ -1498,6 +1505,7 @@ td {
   }
 
 }
+
 .table-wrapper {
   overflow-x: auto;
 }
@@ -1505,6 +1513,7 @@ td {
 table {
   min-width: 600px;
 }
+
 @media (min-width: 1400px) {
 
   .main-content,
@@ -1513,6 +1522,7 @@ table {
   }
 
 }
+
 @media (max-width: 480px) {
 
   .hero-overlay h1 {
@@ -1528,6 +1538,7 @@ table {
   }
 
 }
+
 @media (max-width: 768px) {
 
   .cart-layout {
