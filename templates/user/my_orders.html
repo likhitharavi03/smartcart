@@ -1,0 +1,43 @@
+{% extends "user/base.html" %}
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+
+<div class="orders-container">
+
+    <h2 class="page-title text-center">📦 My Orders</h2>
+
+    {% if orders|length == 0 %}
+    <p>You have not placed any orders yet.</p>
+    {% endif %}
+
+    {% for order in orders %}
+    <div class="order-card">
+
+        <h3 class="order-id">Order #{{ order.order_id }}</h3>
+
+        <p><strong>Amount:</strong> ₹{{ "%.2f"|format(order.amount) }}</p>
+        <p><strong>Status:</strong> {{ order.payment_status }}</p>
+        <p><strong>Date:</strong> {{ order.created_at }}</p>
+
+        <div class="order-buttons">
+            <a href="{{ url_for('order_success', order_db_id=order.order_id) }}">
+                View Order Details
+            </a>
+
+            <a href="{{ url_for('download_invoice', order_id=order.order_id) }}">
+                Download Invoice
+            </a>
+
+            <a href="{{ url_for('delete_order', order_id=order.order_id) }}">
+                Delete Order
+            </a>
+
+        </div>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

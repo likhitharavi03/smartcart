@@ -1,0 +1,17 @@
+{% extends "user/base.html" %}
+{% block title %}Payment Success{% endblock %}
+
+{% block content %}
+<div class="center-wrapper">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/payment_success.css') }}">
+
+<div class="success-container">
+    <h2>Payment Successful!</h2>
+    <p>Payment ID: {{ payment_id }}</p>
+    <p>Order ID: {{ order_id }}</p>
+
+    <a href="/user/products" class="continue-btn">
+        Continue Shopping
+    </a>
+</div></div>
+{% endblock %}

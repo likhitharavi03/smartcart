@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+{% block title %}View Product{% endblock %}
+
+{% block content %}
+
+<div class="card">
+<h1>{{ product.name }}</h1>
+
+<img src="/static/uploads/product_images/{{ product.image }}" width="200"><br><br>
+
+<p><b>Description</b>:{{ product.description }}</p>
+<p><b>Category</b>: {{ product.category }}</p>
+<p><b>Price</b>: ₹{{ product.price }}</p>
+
+<a href="/admin/item-list" class="btn"><b>Back to Dashboard</b></a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "admin/base.html" %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="center-wrapper">
+<div class="card">
+<h2>Admin Registration</h2> 
+<br>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <p style="
+                    text-align:center;
+                    color:{% if category == 'danger' %}red{% else %}green{% endif %};
+                ">
+                    {{ message }}
+                </p>
+            {% endfor %}
+        {% endwith %}
+<form method="POST" action="/admin-signup">
+    <label>Name:</label>
+    <input type="text" name="name" required>
+
+    <label>Email:</label>
+    <input type="email" name="email" required>
+
+    <button type="submit">Send OTP</button>
+    <p style="text-align:center;margin-top:10px;">
+    Already registered? <a href="{{ url_for('admin_login') }}">Login</a>
+</p>
+</form></div>
+</div>
+{% endblock %}
+

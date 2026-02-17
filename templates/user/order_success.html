@@ -1,0 +1,70 @@
+{% extends "user/base.html" %}
+{% block content %}
+<div class="center-wrapper">
+<div class="success-container">
+
+    <h2 class="success-title">🎉 Your Order is Confirmed!</h2>
+    <p>Thank you for shopping with <b>SmartCart</b></p>
+    <div class="delivery-address">
+        Delivery Address</h3>
+
+        <p><strong>{{ order.name }}</strong></p>
+        <p>{{ order.address }}</p>
+        <p>{{ order.city }} - {{ order.pincode }}</p>
+        <p>📞 {{ order.phone }}</p>
+        <!-- ✅ Edit Address Button -->
+        <div class="edit-address-wrapper">
+            <a href="{{ url_for('delivery_address') }}" class="edit-btn">
+                Edit Address ✏
+            </a>
+
+        </div>
+        <h3>
+    </div>
+
+
+
+    <div class="order-info">
+        <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+        <p><strong>Payment ID:</strong> {{ order.payment_id }}</p>
+        <p><strong>Amount Paid:</strong> ₹{{ "%.2f"|format(order.amount) }}</p>
+        <p><strong>Order Date:</strong> {{ order.created_at }}</p>
+    </div>
+
+    <h3>Order Summary</h3>
+
+    <table class="order-table">
+            <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price (INR)</th>
+            </tr>
+
+            {% for it in items %}
+            <tr>
+                <td>{{ it.name }}</td>
+                <td>{{ it.quantity }}</td>
+                <td>INR {{ it.price }}</td>
+            </tr>
+            {% endfor %}
+        <div class="total">
+            Grand Total: INR {{ order.amount }}
+        </div>
+
+    </table>
+
+    <div class="order-buttons">
+        <a href="{{ url_for('user_products') }}" class="btn">
+            Continue Shopping
+        </a>
+
+        <a href="{{ url_for('order_success', order_db_id=order.order_id) }}">
+    View Order Details
+</a>
+
+        <a href="/user/download-invoice/{{ order.order_id }}" class="btn">Download Invoice (PDF)</a>
+    </div>
+
+</div>
+</div>
+{% endblock %}

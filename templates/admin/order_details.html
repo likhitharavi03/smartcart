@@ -1,0 +1,75 @@
+{% extends "admin/base.html" %}
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+<div class="center-wrapper">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<div class="card">
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+    <p style="color:green;text-align:center;">{{ message }}</p>
+    {% endfor %}
+    {% endwith %}
+
+    <div class="box">
+
+        <h2>Order #{{ order.order_id }}</h2>
+
+        <p><strong>Payment:</strong> {{ order.payment_status }}</p>
+        <p><strong>Total Amount:</strong> ₹{{ order.amount }}</p>
+        <p><strong>Current Status:</strong> {{ order.order_status }}</p>
+
+        <br>
+
+        <h3>Update Order Status</h3>
+
+        <form method="POST" action="/admin/update-order-status/{{ order.order_id }}">
+            <select name="status">
+                <option value="Pending">Pending</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Packed">Packed</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
+            </select>
+
+            <button type="submit" class="btn">Update</button>
+        </form>
+
+        <br>
+
+        <h3>Items</h3>
+
+        <!-- IMPORTANT WRAPPER -->
+        <div class="table-container">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for it in items %}
+                    <tr>
+                        <td>{{ it.product_name }}</td>
+                        <td>{{ it.quantity }}</td>
+                        <td>₹{{ it.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+</div>
+{% endblock %}

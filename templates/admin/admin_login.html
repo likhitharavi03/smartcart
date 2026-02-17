@@ -1,0 +1,35 @@
+{% extends "admin/base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="center-wrapper">
+<div class="card">
+<h2>Admin Login</h2>
+<br>
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="flash {{ category }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<form method="POST" action="/admin-login">
+    
+    <label>Email:</label>
+    <input type="email" name="email" required>
+
+    <label>Password:</label>
+    <input type="password" name="password" required>
+
+    <button type="submit">Login</button>
+
+    <p style="text-align:center;margin-top:10px;">
+    <a href="/admin/forgot"><b>Forgot Password?</b></a><br>
+    New Admin? <a href="{{ url_for('admin_signup') }}"><b>Please Register here</b></a>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}SmartCart Admin{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- ===== MOBILE SIDEBAR TOGGLE ===== -->
+    <input type="checkbox" id="sidebar-toggle">
+    <label for="sidebar-toggle" class="hamburger">☰</label>
+
+    <!-- =====================================================
+     SIDEBAR (LEFT)
+===================================================== -->
+    <div class="sidebar">
+
+        <h2>🛒 SmartCart</h2>
+
+        {% if session.get('admin_id') %}
+        <a href="{{ url_for('admin_dashboard') }}"><b>🏠Dashboard</b></a><br>
+        <a href="{{ url_for('add_item') }}"><b>🧺Add Product</b></a><br>
+        <a href="{{ url_for('admin_orders') }}" <b>📋 Orders</b></a><br>
+        <a href="{{ url_for('admin_profile') }}"><b>👤My Profile</b></a><br>
+        <a href="{{ url_for('admin_logout') }}"><b>⏻Logout</b></a>
+        {% else %}
+        <a href="{{ url_for('admin_login') }}"><b>🔑Login</b></a><br>
+        <a href="{{ url_for('admin_signup') }}"><b>📝Register</b></a>
+        {% endif %}
+
+    </div>
+
+    <!-- =====================================================
+     MAIN WRAPPER
+===================================================== -->
+    <div class="main-wrapper">
+
+        <!-- ===== TOP NAVBAR ===== -->
+        <div class="top-navbar">
+            <div class="navbar-left">
+                <h2>Admin Panel</h2></div>
+
+
+            {% if session.get('admin_id') %}
+            <div class="navbar-right">
+                <div class="notification">
+                    🔔
+                    <span class="badge">Notification</span>
+                </div>
+
+                <div class="profile-section">
+
+                    {% if admin and admin.profile_image %}
+                    <img src="{{ url_for('static',
+                     filename='uploads/admin_profiles/' ~ admin.profile_image) }}" width="40" height="40"
+                        style="border-radius:50%; object-fit:cover;">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='images/admin_default.png') }}" width="40" height="40"
+                        style="border-radius:50%; object-fit:cover;">
+                    {% endif %}
+
+                    <span>{{ admin.name if admin else 'Admin' }}</span>
+
+                    <a href="{{ url_for('admin_logout') }}" class="logout-btn">
+                        Logout
+                    </a>
+
+                </div>
+
+            </div>
+            {% endif %}
+
+        </div>
+
+        <!-- ===== FLASH MESSAGES ===== -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-container">
+            {% for category, message in messages %}
+            <div class="flash-message {{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- ===== PAGE CONTENT ===== -->
+        <div class="main-content">
+            {% block content %}
+            <!-- Example: Welcome card -->
+            <div class="card">
+                <h2>Welcome to SmartCart</h2>
+                <p>Select Your Panel:</p>
+                <p><a href="{{ url_for('admin_login') }}" class="btn">Admin Login</a></p>
+                <p><a href="{{ url_for('user_login') }}" class="btn">User Dashboard</a></p>
+            </div>
+            {% endblock %}
+        </div>
+
+
+        <!-- ===== FOOTER ===== -->
+        <div class="footer">
+            © 2026 SmartCart Admin Panel. All rights reserved.
+        </div>
+
+    </div>
+
+</body>
+
+</html>

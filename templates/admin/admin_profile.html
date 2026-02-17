@@ -1,0 +1,68 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Admin Profile{% endblock %}
+
+{% block content %}
+<div class="center-wrapper">
+<div style="display:flex; justify-content:center; margin-top:30px;">
+    <div class="card" style="width:400px; padding:20px;">
+
+        <h2 style="text-align:center;">Admin Profile</h2>
+        <br>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <p style="
+                    text-align:center;
+                    color:{% if category == 'danger' %}red{% else %}green{% endif %};
+                ">
+                    {{ message }}
+                </p>
+            {% endfor %}
+        {% endwith %}
+
+        <!-- Profile Image -->
+        <div style="text-align:center;">
+            {% if admin.profile_image %}
+                <img src="{{ url_for('static', filename='uploads/admin_profiles/' ~ admin.profile_image) }}"
+                     width="120" height="120"
+                     style="border-radius:50%; object-fit:cover;">
+            {% else %}
+                <img src="{{ url_for('static', filename='images/admin_default.png') }}"
+                     width="120" height="120"
+                     style="border-radius:50%; object-fit:cover;">
+            {% endif %}
+        </div>
+
+        <br>
+
+        <!-- Profile Update Form -->
+        <form method="POST" action="{{ url_for('admin_profile_update') }}" enctype="multipart/form-data">
+
+            <label>Name</label>
+            <input type="text" name="name" value="{{ admin.name }}" required
+                   style="width:100%; padding:6px;">
+
+            <label>Email</label>
+            <input type="email" name="email" value="{{ admin.email }}" required
+                   style="width:100%; padding:6px;">
+
+            <label>New Password (optional)</label>
+            <input type="password" name="password"
+                   style="width:100%; padding:6px;">
+
+            <label>Upload New Profile Image (optional)</label>
+            <input type="file" name="profile_image" accept="image/*">
+
+            <button type="submit" style="width:100%; padding:8px;">
+                Update Profile
+            </button>
+        </form>
+        <div style="text-align:center;">
+            <a href="{{ url_for('admin_dashboard') }}"><b>← Back to Dashboard</b></a>
+        </div>
+
+    </div>
+</div></div>
+{% endblock %}

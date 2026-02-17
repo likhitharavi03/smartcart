@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}SmartCart{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+  <!-- ===== MOBILE SIDEBAR TOGGLE ===== -->
+  <input type="checkbox" id="sidebar-toggle">
+  <label for="sidebar-toggle" class="hamburger">☰</label>
+
+  <!-- ===== SIDEBAR ===== -->
+  <div class="sidebar">
+    <h2>🛒 Smart Cart</h2>
+
+    <a href="{{ url_for('admin_login') }}">Admin Login</a><br>
+    <a href="{{ url_for('user_login') }}">User Login</a><br><br>
+  </div>
+
+  <!-- ===== MAIN WRAPPER ===== -->
+  <div class="main-wrapper">
+
+    <!-- ===== TOP NAVBAR ===== -->
+    <div class="top-navbar">
+      <center>
+        <h3>Smart Cart Panel</h3>
+        
+      </center>
+    </div>
+    <!-- ===== HERO BACKGROUND SECTION ===== -->
+    <div class="hero-section">
+      <div class="hero-overlay">
+        <h1>Smart Cart Shopping Experience</h1>
+        <p>Trendy Products • Best Prices • Fast Delivery</p>
+      </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        © 2026 SmartCart. All rights reserved.
+    </footer>
+
+  </div>
+
+</body>
+
+</html>

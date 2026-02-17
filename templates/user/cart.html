@@ -1,0 +1,107 @@
+{% extends "user/base.html" %}
+{% block title %}Your Cart{% endblock %}
+
+{% block content %}
+<div class="center-wrapper">
+
+<div class="cart-container"><br>
+
+    <h2 class="cart-title">My Cart</h2><br>
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if not cart %}
+
+        <div class="empty-cart">
+            <h3>Your cart is empty</h3><br>
+            <a href="{{ url_for('user_products') }}" class="shop-btn">Shop Now</a>
+        </div>
+
+    {% else %}
+
+    <div class="cart-layout">
+
+        <!-- LEFT SIDE PRODUCTS -->
+        <div class="cart-products">
+
+            {% for pid, item in cart.items() %}
+            <div class="cart-card">
+
+                <div class="cart-image">
+                    <img src="{{ url_for('static', filename='uploads/product_images/' + item.image) }}">
+                </div>
+
+                <div class="cart-details">
+                    <h3>{{ item.name }}</h3>
+                    <p class="price">₹{{ item.price }}</p>
+
+                    <!-- Quantity Form -->
+                    <div class="quantity-box">
+
+                        <!-- Decrease -->
+                        <form action="{{ url_for('decrease_quantity', pid=pid) }}" method="GET">
+                            <button type="submit" class="qty-btn">-</button>
+                        </form>
+
+                        <span>{{ item.quantity }}</span>
+
+                        <!-- Increase -->
+                        <form action="{{ url_for('increase_quantity', pid=pid) }}" method="GET">
+                            <button type="submit" class="qty-btn">+</button>
+                        </form>
+
+                    </div>
+
+                    <p class="item-total">
+                        Total: ₹{{ item.price * item.quantity }}
+                    </p>
+
+                    <!-- Remove -->
+                    <form action="{{ url_for('remove_from_cart', pid=pid) }}" method="GET">
+                        <button type="submit" class="remove-btn">REMOVE</button>
+                    </form>
+
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- RIGHT SIDE SUMMARY -->
+        <div class="cart-summary">
+
+            <h3>PRICE DETAILS</h3><br>
+
+            <p>Total Items: <strong>{{ cart|length }}</strong></p>
+            <p>Grand Total: <strong>₹{{ grand_total }}</strong></p><br>
+
+            <form action="{{ url_for('delivery_address') }}" method="GET">
+                <button type="submit" class="summary-btn place-order">
+                    Place Order
+                </button>
+            </form>
+
+            <a href="{{ url_for('user_products') }}" class="summary-btn">
+                Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</div>
+{% endblock %}

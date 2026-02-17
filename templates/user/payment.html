@@ -1,0 +1,63 @@
+{% extends "user/base.html" %}
+{% block content %}
+<div class="center-wrapper">
+<div class="payment-wrapper">
+    <div class="smartcart-card">
+
+        <div class="cart-icon">🛒</div>
+
+        <h2 class="title">SmartCart Payment</h2>
+        <p class="subtitle">Secure Payment Powered by Razorpay 🔐</p>
+
+        <div class="total-box">
+            Total Payable: ₹{{ amount }}
+        </div>
+
+        <button id="pay-btn" class="pay-btn">
+            💳 Pay Now
+        </button>
+
+        <p class="trusted">Trusted by millions ❤️</p>
+
+    </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+var options = {
+    "key": "{{ key_id }}",
+    "amount": "{{ amount * 100 }}",
+    "currency": "INR",
+    "name": "SmartCart",
+    "order_id": "{{ order_id }}",
+    "handler": function (response){
+
+        fetch("/user/payment-success", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                payment_id: response.razorpay_payment_id,
+                order_id: response.razorpay_order_id,
+                signature: response.razorpay_signature
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            window.location.href = data.redirect_url;
+        });
+
+    }
+};
+
+var rzp1 = new Razorpay(options);
+
+document.getElementById('pay-btn').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "admin/base.html" %}
+{% block title %}Order List{% endblock %}
+
+{% block content %}
+<div class="center-wrapper">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<div class="card">
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+    <p style="color:green;text-align:center;">{{ message }}</p>
+    {% endfor %}
+    {% endwith %}
+
+    <h2>📦 All Customer Orders</h2>
+
+    <!-- RESPONSIVE TABLE WRAPPER -->
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>User</th>
+                    <th>Amount</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.order_id }}</td>
+                    <td>{{ order.username }}</td>
+                    <td>₹{{ order.amount }}</td>
+                    <td>{{ order.payment_status }}</td>
+                    <td>{{ order.order_status }}</td>
+                    <td>{{ order.created_at }}</td>
+                    <td>
+                        <a class="btn" href="/admin/order/{{ order.order_id }}">
+                            View
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+</div>
+{% endblock %}

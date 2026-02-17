@@ -1,0 +1,85 @@
+{% extends "user/base.html" %}
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<center><br><br>
+    <h2>Welcome, {{ user_name }}!</h2><br>
+    <p>Browse our products below:</p>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+    <p class="flash-message">{{ message }}</p>
+    {% endfor %}
+    {% endwith %}
+
+    <!-- Search + Filter Row -->
+    <div class="filter-row">
+
+        <form method="GET" action="/user/products">
+            <input type="text" name="search" placeholder="Search product..."
+                value="{{ request.args.get('search', '') }}">
+            <button type="submit">Search</button>
+        </form>
+        <form method="GET" action="/user/products">
+            <select name="category">
+                <option value="">All Categories</option>
+                {% for cat in categories %}
+                <option value="{{ cat.category }}" {% if request.args.get('category')==cat.category %} selected {% endif
+                    %}>
+                    {{ cat.category }}
+                </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Filter</button>
+        </form>
+
+    </div>
+
+<br>
+    <hr>
+    <!-- Carousel Section -->
+    <div class="carousel">
+        <div class="slides">
+            <img src="{{ url_for('static', filename='banners/b1.jpeg') }}" alt="B 1">
+            <img src="{{ url_for('static', filename='banners/b2.jpeg') }}" alt="B 2">
+            <img src="{{ url_for('static', filename='banners/b3.jpeg') }}" alt="B 3">
+            <img src="{{ url_for('static', filename='banners/b4.jpeg') }}" alt="B 4">
+            <img src="{{ url_for('static', filename='banners/b5.jpeg') }}" alt="B 5">
+            
+        </div>
+    </div>
+
+    <script>
+        let index = 0;
+        const slides = document.querySelector('.slides');
+        const totalSlides = document.querySelectorAll('.slides img').length;
+
+        setInterval(() => {
+            index++;
+            if (index >= totalSlides) {
+                index = 0;
+            }
+            slides.style.transform = `translateX(-${index * 100}%)`;
+        }, 2000); // 2 seconds
+    </script>
+    <hr>
+    <hr>
+
+    <!-- Product Cards Container -->
+    <div class="product-container">
+        {% for product in products %}
+        <div class="product-card">
+            <img src="/static/uploads/product_images/{{ product.image }}" alt="{{ product.name }}">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.category }}</p>
+            <p><strong>₹{{ product.price }}</strong></p>
+            <a href="{{ url_for('user_product_details', product_id=product.product_id) }}">
+                View Details
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</center>
+
+{% endblock %}

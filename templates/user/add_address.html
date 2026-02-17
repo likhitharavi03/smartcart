@@ -1,0 +1,48 @@
+{% extends "user/base.html" %}
+{% block content %}
+<div class="address-wrapper">
+    <div class="address-card">
+
+        <h2>Delivery Address</h2>
+
+        <form method="POST">
+
+            <label>Full Name</label>
+            <input type="text"
+                   name="name"
+                   value="{{ session.delivery_address.name if session.get('delivery_address') }}"
+                   required>
+
+            <label>Phone</label>
+            <input type="text"
+                   name="phone"
+                   value="{{ session.delivery_address.phone if session.get('delivery_address') }}"
+                   required>
+
+            <label>Address</label>
+            <input type="text"
+                   name="address"
+                   value="{{ session.delivery_address.address if session.get('delivery_address') }}"
+                   required>
+
+            <label>City</label>
+            <input type="text"
+                   name="city"
+                   value="{{ session.delivery_address.city if session.get('delivery_address') }}"
+                   required>
+
+            <label>Pincode</label>
+            <input type="text"
+                   name="pincode"
+                   value="{{ session.delivery_address.pincode if session.get('delivery_address') }}"
+                   required>
+
+            <button type="submit" class="save-btn">
+                Save Address
+            </button>
+
+        </form>
+
+    </div>
+</div>
+{% endblock %}
